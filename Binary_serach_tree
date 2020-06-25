@@ -1,0 +1,144 @@
+package my_project;
+import java.util.*;
+
+
+class Node{
+	int data;
+	Node left;
+	Node right;
+}
+
+class binarytree{
+	public Node insert_node(Node n,int val) {
+		if(n==null) {
+			return create_node(val);
+		}
+		if(n.data>val) {
+			n.left=insert_node(n.left,val);
+		}
+		else if(n.data<val) {
+			n.right=insert_node(n.right,val);
+		}
+		return n;
+	}
+	
+	
+	public Node create_node(int val) {
+		Node new_node=new Node();
+		new_node.data=val;
+		new_node.left=new_node.right=null;
+		return new_node;
+	}
+	
+	public Node insert_at_i(Node n,int val) {
+		if(n.data==8) {
+			Node new_node=new Node();
+			new_node.data=val;
+			if(n.data>val) {
+				new_node.left=n.left;
+				n.left=new_node;
+			}
+			if(n.data<val) {
+				new_node.right=n.left;
+				n.right=new_node;
+			}
+			
+		}
+		return n;
+	}
+	
+	
+	public Node delete_node(Node n,int val) {
+		if(n==null) {
+			return n;
+		}
+		if(n.data>val) {
+			n.left=delete_node(n.left, val);
+		}
+		else if(n.data<val) {
+			n.right=delete_node(n.right, val);
+		}
+		else {
+			
+			if(n.left==null && n.right==null) {
+//				System.out.print("i am here"+val+n.left+n.right+n.data+"\n");
+//				n.data=55;
+				n=null;
+				return n;
+				
+			}
+			else if((n.left==null && n.right!=null) ||(n.left!=null && n.right==null) ) {
+				
+				if(n.left==null) {
+					n=n.right;
+				}
+				else if(n.left!=null) {
+					n=n.left;
+				}
+				return n;
+			}
+			else {
+				int x=get_max(n.left);
+				System.out.println(x);
+				n.data=x;
+//				show_tree(n);
+				n.left=delete_node(n.left, x);
+				return n;
+			}
+		}
+		return n;
+	}
+	
+	
+	public void show_tree(Node n) {
+//		System.out.print(1);
+		if(n!=null) {
+			System.out.print(n.data+" ");
+			
+		}
+		if(n.left!=null) {
+			show_tree(n.left);
+		}
+		if(n.right!=null) {
+			show_tree(n.right);
+		}
+		
+	}
+	static public int get_max(Node n) {
+		if(n.right==null) {
+//			System.out.println(n.data);
+			return n.data;
+		}
+		else {
+			return get_max(n.right);
+		}
+		
+	}
+	
+}
+
+
+public class binary_tree {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		binarytree bst=new binarytree();
+		Node node=null;
+		node=bst.insert_node(node, 50);
+		node=bst.insert_node(node, 30);
+		node=bst.insert_node(node, 70);
+		node=bst.insert_node(node, 20);
+		node=bst.insert_node(node, 40);
+		node=bst.insert_node(node, 60);
+		node=bst.insert_node(node, 80);
+//		node=bst.insert_node(node, 45);
+		node=bst.insert_node(node, 24);
+//		node=bst.insert_node(node, 7);
+//		bst.show_tree(node);
+		System.out.println();
+		bst.delete_node(node,50 );
+		bst.show_tree(node);
+//		bst.get_max(node.left);
+	}
+
+}
